@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Bootstrap Css-->
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.rtl.min.css">
+  <!-- Bootstrap icons-->
+  <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+  <!-- Main Css File -->
+  <link rel="stylesheet" href="./css/main.css">
+  <title>Admin Dashboard</title>
+  <!--Alpine js & JS library register first-->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+  <!-- ** ** Admin Dashboard ** ** -->
+  <section  x-data="toggleSidebar">
+
+
+
+    <!-- ** Sidebar ** -->
+    <section class="sidebar" x-bind:class="open || 'inactive'" x-cloak="">
+      <div class="d-flex justify-content-between align-items-center justify-content-lg-center">
+        <h4 class="fw-bold">Dashboard</h4>
+        <i class="bi bi-x fs-1 d-lg-none" @click="toggle"></i>
+      </div>
+      <div class="mt-4">
+        <ul class="list-unstyled">
+          <!-- dashboard -->
+          <li class="sidebar-item active">
+            <a class="sidebar-link" href="./index.html">
+              <i class="bi bi-grid-fill me-2"></i>
+              <span>داشبورد</span>
+            </a>
+          </li>
+          <!-- Store -->
+          <li class="sidebar-item" x-data="dropdown">
+            <div class="sidebar-link" @click="toggle">
+              <i class="bi bi-shop me-2"></i>
+              <span>فروشگاه</span>
+              <i class="ms-auto bi-chevron-down"></i>
+            </div>
+            <ul class="submenu" x-show="open" x-transition>
+              <li class="submenu-item"><a class="submenu-link" href="#">ایجاد فروشگاه</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">ویرایش فروشگاه</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">لیست فروشگاه ها</a></li>
+            </ul>
+          </li>
+          <!-- Products -->
+          <li class="sidebar-item" x-data="dropdown">
+            <div class="sidebar-link" @click="toggle">
+              <i class="bi bi-box-seam me-2"></i>
+              <span>محصولات</span>
+              <i class="ms-auto bi-chevron-down"></i>
+            </div>
+            <ul class="submenu" x-show="open" x-transition>
+              <li class="submenu-item"><a class="submenu-link" href="#">ایجاد محصول</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">ویرایش محصول</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="./product.html">لیست محصولات</a></li>
+            </ul>
+          </li>
+          <!-- Orders -->
+          <li class="sidebar-item" x-data="dropdown">
+            <div class="sidebar-link" @click="toggle">
+              <i class="bi bi-basket-fill me-2"></i>
+              <span>سفارشات</span>
+              <i class="ms-auto bi-chevron-down"></i>
+            </div>
+            <ul class="submenu" x-show="open" x-transition>
+              <li class="submenu-item"><a class="submenu-link" href="#">لیست سفارشات</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">سفارشات تایید شده</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">سفارشات تایید نشده</a></li>
+            </ul>
+          </li>
+          <!-- Discounts -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="#">
+              <i class="bi bi-percent me-2"></i>
+              <span>تخفیف ها</span>
+            </a>
+          </li>
+          <!-- Tickets -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="#">
+              <i class="bi bi-chat-right-dots-fill me-2"></i>
+              <span>تیکت ها</span>
+            </a>
+          </li>
+          <!-- Users -->
+          <li class="sidebar-item" x-data="dropdown">
+            <div class="sidebar-link" @click="toggle">
+              <i class="bi bi-people-fill me-2"></i>
+              <span>کاربران</span>
+              <i class="ms-auto bi-chevron-down"></i>
+            </div>
+            <ul class="submenu" x-show="open" x-transition>
+              <li class="submenu-item"><a class="submenu-link" href="#">لیست کاربران</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">ایجاد کاربر</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">ویرایش کاربر</a></li> 
+            </ul>
+          </li>
+          <!-- comments -->
+          <li class="sidebar-item" x-data="dropdown">
+            <div class="sidebar-link" @click="toggle">
+              <i class="bi bi-chat-dots-fill me-2"></i>
+              <span>کامنت ها</span>
+              <i class="ms-auto bi-chevron-down"></i>
+            </div>
+            <ul class="submenu" x-show="open" x-transition>
+              <li class="submenu-item"><a class="submenu-link" href="#">لیست کامنت ها</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">کامنت های تایید شده</a></li>
+              <li class="submenu-item"><a class="submenu-link" href="#">کامنت های تایید نشده</a></li> 
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- ** END Sidebar **-->
+  
+
+
+
+    <!-- ** Main Content ** -->
+    <section class="main" x-bind:class="open || 'active'">
+
+
+      <!-- **  Header  ** -->
+      <header class="d-flex justify-content-between p-3 align-items-center">
+        <div>
+          <i class="toggle-sidebar-icon bi bi-justify fs-3" @click="toggle"></i>
+        </div>
+        <!-- Notifications -->
+        <div class="d-flex align-items-center">
+          <div class="dropdown">
+            <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="position-absolute top-0 end-50 translate-middle badge rounded-pill bg-danger">
+                48
+                </span>
+              <i class="bi bi-bell fs-4 text-gray-600"></i>
+            </div>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">نوتیفیکیشن ها</a></li>
+              <li><a class="dropdown-item" href="#">اعلان های امنیتی</a></li>
+              <li><a class="dropdown-item" href="#">لاگ سرور</a></li>
+            </ul>
+          </div>
+          <!-- Email Services -->
+          <div class="dropdown mx-5">
+            <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="position-absolute top-0 end-50 translate-middle badge rounded-pill bg-danger">
+                99+
+                </span>
+              <i class="bi bi-envelope fs-4 text-gray-600"></i>
+            </div>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">صندوق پستی</a></li>
+              <li><a class="dropdown-item" href="#">خوانده شده ها</a></li>
+              <li><a class="dropdown-item" href="#">حذف ایمیل ها</a></li>
+            </ul>
+          </div>
+          <!-- Profile -->
+          <div class="dropdown">
+            <div class="dropdown-toggle d-flex align-items-center profile-arrow-down-hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img class="img-fluid rounded-circle me-2" src="../assets/image/7.jpg" alt="admin-profile-pic" width="45">
+              <div>
+                <h6 class="fs-6 fw-bold text-gray-600 mb-0">سینا قاسمی</h6>
+                <p class="fs-8 fw-bold text-gray-600 mb-0">همه کاره</p>
+              </div>
+            </div>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <a class="dropdown-item fs-7" href="#">
+                  <i class="bi bi-person fs-5 me-1"></i>
+                  پروفایل
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item fs-7" href="#">
+                  <i class="bi bi-gear fs-6 me-1"></i>
+                  تنظیمات
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item fs-7" href="#">
+                  <i class="bi bi-wallet fs-6 me-1"></i>
+                  حساب کاربری
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item fs-7" href="#">
+                  <i class="bi bi-box-arrow-left fs-6 me-1"></i>
+                  خروج
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <!-- **  End Header ** -->
+
+
+      <!-- **   Content   **  -->
+      <div class="content p-2 p-lg-4">
+        
+        <div class="container-fluid">
+          <div class="row gy-4">
+            <!-- *> Stats <* -->
+            <div class="col-xl-9">
+              <div class="row g-3">
+                <div class="col-6 col-xl-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <div class="col-md-4">
+                          <div class="stats-icon bg-light-purple">
+                            <i class="bi bi-eye-fill lh-0"></i> 
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <h6 class="fs-7 text-muted">نمایش پروفایل</h6>
+                          <h6 class="fw-bold mb-0" id="show-profile-number">0</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <div class="col-md-4">
+                          <div class="stats-icon bg-light-blue">
+                            <i class="bi bi-person-fill lh-0"></i> 
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <h6 class="fs-7 text-muted">تعداد کاربران</h6>
+                          <h6 class="fw-bold mb-0" id="members-count">0</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <div class="col-md-4">
+                          <div class="stats-icon bg-light-green">
+                            <i class="bi bi-person-plus-fill lh-0"></i> 
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <h6 class="fs-7 text-muted">کاربران آنلاین</h6>
+                          <h6 class="fw-bold mb-0" id="online-users">0</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                  <div class="card">
+                  <div class="card-body">
+                    <div class="row g-3">
+                      <div class="col-md-4">
+                        <div class="stats-icon bg-light-orange">
+                          <i class="bi bi-bookmark-fill lh-0"></i> 
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <h6 class="fs-7 text-muted">تگ های برگزیده</h6>
+                        <h6 class="fw-bold mb-0" id="especial-tags">0</h6>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Sale Chart -->
+              <div class="row mt-4 g-3">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="fw-bold mb-0">نمودار فروش</h5>
+                    </div>
+                    <div class="card-body">
+                      <div id="chartdiv"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Stats of business progress via Last comments  -->
+              <div class="row mt-4">
+                <div class="col-xl-4">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="fw-bold mb-0">نرخ افزایش سود در سال</h5>
+                    </div>
+                    <div class="card-body">
+                      <!-- progress cell 1 -->
+                      <div>
+                        <div class="progress " role="progressbar" aria-label="Example with label" aria-valuenow="19" aria-valuemin="0" aria-valuemax="100">
+                          <div class="progress-bar bg-light-purple" style="width: 19%">19%</div>
+                        </div>
+                      </div>
+                      <p class="fs-7 text-muted mt-2">نرخ سود در سال 1398</p>
+                      <hr>
+                      <!-- progress cell 2 -->
+                      <div>
+                        <div class="progress " role="progressbar" aria-label="Example with label" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100">
+                          <div class="progress-bar bg-light-blue" style="width: 26%">26%</div>
+                        </div>
+                      </div>
+                      <p class="fs-7 text-muted mt-2">نرخ سود در سال 1399</p>
+                      <hr>
+                           <!-- progress cell 3 -->
+                           <div>
+                            <div class="progress " role="progressbar" aria-label="Example with label" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
+                              <div class="progress-bar bg-light-orange" style="width: 34.5%">34.5%</div>
+                            </div>
+                          </div>
+                          <p class="fs-7 text-muted mt-2">نرخ سود در سال 1400</p>
+                          <hr>
+                          <!-- progress cell 4 -->
+                          <div>
+                            <div class="progress " role="progressbar" aria-label="Example with label" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100">
+                              <div class="progress-bar bg-light-green" style="width: 49.7%">49.7%</div>
+                            </div>
+                          </div>
+                          <p class="fs-7 text-muted mt-2">نرخ سود در سال 1401</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Comments -->
+                <div class="col-xl-8">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="fw-bold mb-0">آخرین کامنت ها</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                          <thead>
+                            <tr>
+                              <th>تصویر</th>
+                              <th>نام کاربری</th>
+                              <th>کامنت</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img class="img-fluid rounded-circle" src="../assets/image/4.jpg" alt="user-pic" width="50">
+                              </td>
+                              <td>
+                                خوده مَمَد
+                              </td>
+                              <td>
+                                خیلی با سایتتون حال نمیکنم با خودتون هم همینطور
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img class="img-fluid rounded-circle" src="../assets/image/5.jpg" alt="user-pic" width="50">
+                              </td>
+                              <td>
+                                اَمیر بگیر
+                              </td>
+                              <td>
+                                که چی؟ این همه تلاش کنید که چی؟ به چی میخوایین برسین؟
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <img class="img-fluid rounded-circle" src="../assets/image/1.jpg" alt="user-pic" width="50">
+                              </td>
+                              <td>
+                                نوشمک تُرش
+                              </td>
+                              <td>
+                                توی کَنِدا بهتر از این محصولات هست میگم دَدَی م بخره برام نه از شما!
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Admin Users Profile -->
+          <div class="col-xl-3">
+            <div class="card ">
+              <div class="card-body p-4 d-flex align-items-center">
+                <img class="img-fluid rounded-circle" src="../assets/image/7.jpg" alt="user-pic" width="70">
+                <div class="ms-3">
+                  <h6 class="fw-bold">سینا قاسمی</h6>
+                  <p class="text-muted mb-0 dir-rtl">@cenaq</p>
+                </div>
+              </div>
+            </div>
+              <!-- Users list -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5 class="fw-bold mb-0">کاربران فعال</h5>
+                </div>
+                <div class="card-body p-4">
+                  <!-- user I -->
+                  <div class="d-flex align-items-center">
+                    <img class="img-fluid rounded-circle" width="60" src="../assets/image/4.jpg" alt="">
+                    <div class="ms-3">
+                      <h6 class="fw-bold">محمد ارباب</h6>
+                      <p class="text-muted mb-0 dir-rtl">@mmdarbab</p>
+                    </div>
+                  </div>
+                  <!-- User II -->
+                  <div class="d-flex align-items-center my-4">
+                    <img class="img-fluid rounded-circle" width="60" src="../assets/image/5.jpg" alt="">
+                    <div class="ms-3">
+                      <h6 class="fw-bold">امیر حسین کیخا</h6>
+                      <p class="text-muted mb-0 dir-rtl">@amirKey</p>
+                    </div>
+                  </div>
+                  <!-- User III -->
+                  <div class="d-flex align-items-center">
+                    <img class="img-fluid rounded-circle" width="60" src="../assets/image/1.jpg" alt="">
+                    <div class="ms-3">
+                      <h6 class="fw-bold">نیوشا ربانی</h6>
+                      <p class="text-muted mb-0 dir-rtl">@nioshaRab</p>
+                    </div>
+                  </div>
+                  <!-- Show All Users Button -->
+                  <div class="d-grid mt-5">
+                    <button class="btn btn-light-primary ">نمایش کاربران</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Users Website Expriment -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5 class="fw-bold mb-0">میزان رضایت مشتری</h5>
+                </div>
+                <div class="card-body">
+                  <div id="userExprimentChart" style="height: 300px;"></div>
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+  <!-- ** ** END Admin Dashboard ** ** -->
+
+  <!-- Bootstrap Bundle JS-->
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Main Js File -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('toggleSidebar', () => ({
+            open: window.innerWidth <= 992 ? false : true,
+            toggle() {
+                this.open = !this.open
+            }
+        })),
+        Alpine.data('dropdown', () => ({
+            open: false,
+            toggle() {
+                this.open = ! this.open
+            }
+        }))
+    });
+  </script>
+  <!-- AMcharts Libraries JS Files -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  <script src="./js/userExpChart.js"></script>
+  <script src="./js/app.js" type="module"></script>
+</body>
+</html>
